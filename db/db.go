@@ -1,7 +1,7 @@
 package db
 
 import (
-	"github.com/EikoNakashima/test-go3/model"
+	"github.com/EikoNakashima/test-go2/model"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
 )
