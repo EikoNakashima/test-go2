@@ -3,6 +3,7 @@ package main
 import (
 	"strconv"
 
+	"github.com/EikoNakashima/test-go2/db"
 	"github.com/gin-gonic/gin"
 )
 
@@ -10,11 +11,11 @@ func main() {
 	router := gin.Default()
 	router.LoadHTMLGlob("views/*.html")
 
-	dbInit()
+	db.Init()
 
 	//Index
 	router.GET("/", func(ctx *gin.Context) {
-		todos := dbGetAll()
+		todos := db.GetAll()
 		ctx.HTML(200, "index.html", gin.H{
 			"todos": todos,
 		})
@@ -24,7 +25,7 @@ func main() {
 	router.POST("/new", func(ctx *gin.Context) {
 		text := ctx.PostForm("text")
 		status := ctx.PostForm("status")
-		dbInsert(text, status)
+		db.Insert(text, status)
 		ctx.Redirect(302, "/")
 	})
 
@@ -35,7 +36,7 @@ func main() {
 		if err != nil {
 			panic(err)
 		}
-		todo := dbGetOne(id)
+		todo := db.GetOne(id)
 		ctx.HTML(200, "detail.html", gin.H{"todo": todo})
 	})
 
@@ -48,7 +49,7 @@ func main() {
 		}
 		text := ctx.PostForm("text")
 		status := ctx.PostForm("status")
-		dbUpdate(id, text, status)
+		db.Update(id, text, status)
 		ctx.Redirect(302, "/")
 	})
 
@@ -59,7 +60,7 @@ func main() {
 		if err != nil {
 			panic("ERROR")
 		}
-		todo := dbGetOne(id)
+		todo := db.GetOne(id)
 		ctx.HTML(200, "delete.html", gin.H{"todo": todo})
 	})
 
@@ -70,7 +71,7 @@ func main() {
 		if err != nil {
 			panic("ERROR")
 		}
-		dbDelete(id)
+		db.Delete(id)
 		ctx.Redirect(302, "/")
 
 	})

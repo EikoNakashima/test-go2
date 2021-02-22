@@ -27,7 +27,7 @@ func gormConnect() *gorm.DB {
 }
 
 //DB初期化
-func dbInit() {
+func Init() {
 	db := gormConnect()
 	// if err != nil {
 	// 	panic("データベース開けず！（dbInit）")
@@ -37,7 +37,7 @@ func dbInit() {
 }
 
 //DB追加
-func dbInsert(text string, status string) {
+func Insert(text string, status string) {
 	db := gormConnect()
 	// if err != nil {
 	// 	panic("データベース開けず！（dbInsert)")
@@ -47,7 +47,7 @@ func dbInsert(text string, status string) {
 }
 
 //DB更新
-func dbUpdate(id int, text string, status string) {
+func Update(id int, text string, status string) {
 	db := gormConnect()
 	// if err != nil {
 	// 	panic("データベース開けず！（dbUpdate)")
@@ -61,7 +61,7 @@ func dbUpdate(id int, text string, status string) {
 }
 
 //DB削除
-func dbDelete(id int) {
+func Delete(id int) {
 	db := gormConnect()
 	// if err != nil {
 	// 	panic("データベース開けず！（dbDelete)")
@@ -73,7 +73,7 @@ func dbDelete(id int) {
 }
 
 //DB全取得
-func dbGetAll() []Todo {
+func GetAll() []Todo {
 	db := gormConnect()
 	// if err != nil {
 	// 	panic("データベース開けず！(dbGetAll())")
@@ -85,7 +85,7 @@ func dbGetAll() []Todo {
 }
 
 //DB一つ取得
-func dbGetOne(id int) Todo {
+func GetOne(id int) Todo {
 	db := gormConnect()
 	// if err != nil {
 	// 	panic("データベース開けず！(dbGetOne())")
