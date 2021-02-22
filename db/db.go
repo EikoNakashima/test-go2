@@ -1,15 +1,10 @@
 package db
 
 import (
+	"github.com/EikoNakashima/test-go3/model"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
 )
-
-type Todo struct {
-	gorm.Model
-	Text   string
-	Status string
-}
 
 func gormConnect() *gorm.DB {
 	DBMS := "mysql"
@@ -32,7 +27,7 @@ func Init() {
 	// if err != nil {
 	// 	panic("データベース開けず！（dbInit）")
 	// }
-	db.AutoMigrate(&Todo{})
+	db.AutoMigrate(&model.Todo{})
 	defer db.Close()
 }
 
@@ -42,7 +37,7 @@ func Insert(text string, status string) {
 	// if err != nil {
 	// 	panic("データベース開けず！（dbInsert)")
 	// }
-	db.Create(&Todo{Text: text, Status: status})
+	db.Create(&model.Todo{Text: text, Status: status})
 	defer db.Close()
 }
 
@@ -52,7 +47,7 @@ func Update(id int, text string, status string) {
 	// if err != nil {
 	// 	panic("データベース開けず！（dbUpdate)")
 	// }
-	var todo Todo
+	var todo model.Todo
 	db.First(&todo, id)
 	todo.Text = text
 	todo.Status = status
@@ -66,31 +61,31 @@ func Delete(id int) {
 	// if err != nil {
 	// 	panic("データベース開けず！（dbDelete)")
 	// }
-	var todo Todo
+	var todo model.Todo
 	db.First(&todo, id)
 	db.Delete(&todo)
 	db.Close()
 }
 
 //DB全取得
-func GetAll() []Todo {
+func GetAll() []model.Todo {
 	db := gormConnect()
 	// if err != nil {
 	// 	panic("データベース開けず！(dbGetAll())")
 	// }
-	var todos []Todo
+	var todos []model.Todo
 	db.Order("created_at desc").Find(&todos)
 	db.Close()
 	return todos
 }
 
 //DB一つ取得
-func GetOne(id int) Todo {
+func GetOne(id int) model.Todo {
 	db := gormConnect()
 	// if err != nil {
 	// 	panic("データベース開けず！(dbGetOne())")
 	// }
-	var todo Todo
+	var todo model.Todo
 	db.First(&todo, id)
 	db.Close()
 	return todo
